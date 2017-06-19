@@ -11,26 +11,12 @@ var expressVue = require('express-vue');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-var events = require('./routes/events');
 
 var app = express();
 
 // view engine setup for jade
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'jade');
-
-// view engine setup for vue
-app.set('views', __dirname + '/views');
-//Optional if you want to specify the components directory separate to your views, and/or specify a custom layout.
-app.set('vue', {
-    //ComponentsDir is optional if you are storing your components in a different directory than your views
-    componentsDir: __dirname + '/components',
-    //Default layout is optional it's a file and relative to the views path, it does not require a .vue extension.
-    //If you want a custom layout set this to the location of your layout.vue file.
-    defaultLayout: 'layout'
-});
-app.engine('vue', expressVue);
-app.set('view engine', 'vue');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -48,7 +34,6 @@ app.use(function (req, res, next) {
 
 app.use('/', index);
 app.use('/users', users);
-app.use('/events', events);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
