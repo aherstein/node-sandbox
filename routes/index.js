@@ -23,6 +23,4 @@ router.get('/userlist', function (req, res) {
     });
 });
 
-// API
-
 module.exports = router;
