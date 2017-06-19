@@ -1,25 +1,24 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET users */
-router.get('/', function (req, res) {
-    const db = req.db;
-    const collection = db.get('usercollection');
-    collection.find({}, {}, function (e, docs) {
-        res.json(docs); // Render the results in JSON format
-    });
-});
+/* GET home page. */
+router.get('/', function (req, res, next) {
+    // res.render('index', {title: 'Users'});
 
-/* POST user */
-router.post('/', function (req, res) {
-    const db = req.db;
-    const collection = db.get('usercollection');
+    let scope = {
+        el: '#vue-instance',
+        data: {
+            username: 'test',
+            email: 'test@test.com'
+        },
+        vue: {
+            meta: {
+                title: 'Users',
+            }
+        }
+    };
 
-    console.log(req.body);
-
-    collection.insert(req.body);
-
-    res.send(200);
+    res.render('users', scope);
 });
 
 module.exports = router;
