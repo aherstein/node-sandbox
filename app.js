@@ -8,6 +8,9 @@ var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/node-sandbox');
 var expressVue = require('express-vue');
+var sass = require('node-sass');
+var sassMiddleware = require('node-sass-middleware')
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -25,6 +28,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(sassMiddleware({
+    /* Options */
+    src: __dirname + '/views/sass', // where the sass files are
+    dest: __dirname + '/public/stylesheets', // where css should go
+    debug: true,
+    outputStyle: 'compressed',
+    prefix: '/stylesheets'  // Where prefix is at <link rel="stylesheets" href="prefix/style.css"/>
+}));
+// Note: you must place sass-middleware *before* `express.static` or else it will
+// not work.
 
 // Make our db accessible to our router
 app.use(function (req, res, next) {
